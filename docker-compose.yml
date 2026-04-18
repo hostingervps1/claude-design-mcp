@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  claude-design-mcp:
+    build: .
+    container_name: claude-design-mcp
+    restart: unless-stopped
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./data:/data
+    environment:
+      - PORT=8090
+      - HEADLESS=true
+      - BROWSER_TIMEOUT=60000
+      - SESSION_FILE=/data/session.json
+      # 填入你的 claude.ai 账号（或登录后 session 自动保存，可留空）
+      - CLAUDE_EMAIL=${CLAUDE_EMAIL:-}
+      - CLAUDE_PASSWORD=${CLAUDE_PASSWORD:-}
+    shm_size: "1gb"      # Chromium 需要足够共享内存
